@@ -1,28 +1,43 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private loggedIn = false;
+  private apiUrl = 'https://localhost:7081/api/auth';
+  private tokenKey = 'auth_token';
+  private refreshTokenKey = 'ref_token';
 
-  login(username: string, password: string): boolean {
-    if (username === 'admin' && password === '1234') {
-      this.loggedIn = true;
-      localStorage.setItem('user', username);
-      return true;
-    }
-    return false;
+  constructor(private http: HttpClient) { }
+
+  login(email: string, password: string): Observable<any> {
+    return this.http.post<{ token: string, refreshToken: string }>(`${this.apiUrl}/login`, { email, password })
+      .pipe(
+        tap(res => {
+          if (res.token) {
+            localStorage.setItem(this.tokenKey, res.token);
+            localStorage.setItem(this.refreshTokenKey, res.refreshToken);
+            localStorage.setItem('user', email);
+          }
+        })
+      );
   }
 
-  isLoggedIn() {
-    return this.loggedIn;
+  logout() {
+    localStorage.removeItem(this.tokenKey);
+    localStorage.removeItem('user');
   }
 
   getUser() {
     return localStorage.getItem('user') || '';
   }
 
-  logout() {
-    this.loggedIn = false;
-    localStorage.removeItem('user');
+  getToken() {
+    return localStorage.getItem(this.tokenKey) || '';
+  }
+
+  isLoggedIn() {
+    return !!this.getToken();
   }
 }
