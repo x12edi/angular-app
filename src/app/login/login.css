@@ -1,0 +1,38 @@
+.login-container {
+  width: 350px;
+  margin: 80px auto;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+input {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+button {
+  margin-top: 15px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 14px;
+}
+
+  button:hover {
+    background-color: #45a049;
+  }
+
+.error {
+  color: red;
+  margin-top: 10px;
+  font-size: 13px;
+}

@@ -1,0 +1,18 @@
+<div class="layout">
+  <div class="sidebar" [class.collapsed]="collapsed">
+    <app-sidebar></app-sidebar>
+  </div>
+
+  <div class="main">
+    <div class="header">
+      <button (click)="toggleSidebar()">☰</button>
+      <div class="user-info">
+        {{ auth.getUser() }}
+        <button (click)="logout()">Logout</button>
+      </div>
+    </div>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
