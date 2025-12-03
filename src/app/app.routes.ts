@@ -12,7 +12,9 @@ export const routes: Routes = [
     path: 'dashboard',
     component: LayoutComponent,
     children: [
-      { path: '', component: DashboardComponent }
+      { path: '', component: DashboardComponent },
+      { path: 'users', loadComponent: () => import('./users/users/users').then(m => m.UsersComponent) },
+      { path: 'settings', loadComponent: () => import('./settings/settings').then(m => m.Settings) }
     ]
   }
 ];
