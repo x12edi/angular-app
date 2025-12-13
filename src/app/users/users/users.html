@@ -2,6 +2,8 @@
 
   <h2>Users</h2>
 
+  <button class="add-btn" (click)="openAdd()">+ Add User</button>
+
   <div class="search-box">
     <input type="text"
            [(ngModel)]="searchText"
@@ -15,9 +17,10 @@
     <thead>
       <tr>
         <th>Id</th>
-        <th>User Name</th>
-        <th>Email</th>
+        <th (click)="sortData('firstName')" class="sortable">User Name</th>
+        <th (click)="sortData('email')" class="sortable">Email</th>
         <th>Role</th>
+        <th>Action</th>
       </tr>
     </thead>
     <tbody>
@@ -26,6 +29,9 @@
         <td>{{ user.firstName }} {{ user.lastName }}</td>
         <td>{{ user.email }}</td>
         <td>{{ user.role }}</td>
+        <td>
+          <button (click)="openEdit(user)">Edit</button>
+        </td>
       </tr>
     </tbody>
   </table>
@@ -37,3 +43,9 @@
   </div>
 
 </div>
+
+<!-- ========== Modal Component ========== -->
+<app-user-modal *ngIf="showModal()"
+                [user]="selectedUser()"
+                (save)="handleSave($event)"
+                (cancel)="closeModal()" />
